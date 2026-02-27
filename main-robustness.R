@@ -66,7 +66,7 @@ results = results %>% filter(2008 <= year & year <= 2013)
 ## Result plots
 ## > Shows that general behavior is stable across for w2v choice
 plot_auc_mean = func_robplot_mean(results, "auc")
-plot_brier_mean =func_robplot_mean(results, "brier")
+plot_brier_mean = func_robplot_mean(results, "brier")
 ## > Shows that the estimates are fairly stable despite low nrep
 plot_auc_range = func_robplot_range(results, "auc")
 plot_brier_range = func_robplot_range(results, "brier")
