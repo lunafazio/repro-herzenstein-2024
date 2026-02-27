@@ -75,9 +75,12 @@ plot_joint_range = (plot_auc_range | plot_brier_range) +
   theme(legend.position = "bottom")
 ## > Make table showing sample size per year
 table_sampxtime = func_nstudy(intersect(years, results[,"year"]))
+## > Álso present plot information in table form
+table_joint_range = func_rangetb(results)
 
 # Export results -------------------------------------------------------------
 write_xlsx(table_sampxtime, "results/ROBUSTNESS_sample_over_time.xlsx")
+write_xlsx(table_joint_range, "results/ROBUSTNESS_results_table.xlsx")
 ggsave("results/ROBUSTNESS_plot_auc_mean.png", plot_auc_mean, width = 11,
   height = 4, dpi = 300)
 ggsave("results/ROBUSTNESS_plot_brier_mean.png", plot_brier_mean, width = 11,

@@ -227,6 +227,29 @@ func_robplot_range = function(results, whichmetric) {
     theme(axis.text.x = element_text(angle = 30, hjust = 1))
 }
 
+func_rangetb = function(results) {
+  results %>%
+    mutate(year = year + 1) %>% # to match text
+    mutate(Data = sub(",.*$", "", Data)) %>%
+    filter(`Word2Vec Settings`=="sg0_window3_dim100_epochs50_stopwords1") %>%
+    select(-`Word2Vec Settings`) %>%
+    pivot_longer(cols = -c(year, Data, Stat, metric, seed)) %>%
+    summarise(
+      meanv  = mean(value),
+      sd    = sd(value),
+      .by = c(year, Data, name, metric)
+    ) %>%
+    rename(value = meanv) %>%
+    mutate(name = factor(name, levels = c(
+        "LIWC", "Controls", "Controls + LIWC",
+        "Text", "Controls + Text", "Controls + LIWC + Text"
+      ), ordered = TRUE
+    )) %>%
+    pivot_longer(cols = c(value, sd), names_to = "stat") %>%
+    select(metric, Data, year, name, stat, value) %>%
+    pivot_wider %>% arrange(metric, Data, year)
+}
+
 # Author provided utils.R, lightly modified ----------------------------------
 #Various utility/helper functions used in the other code files
 #will be source()'d in where needed, no need to run directly
