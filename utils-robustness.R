@@ -195,7 +195,7 @@ func_robplot_range = function(results, whichmetric) {
     filter(w2v == "sg0_window3_dim100_epochs50_stopwords1") %>%
     mutate(Data = sub(",.*$", "", Data)) %>%
     pivot_longer(cols = -c(year, Data, Stat, w2v, metric, seed)) %>%
-    filter(grepl("Text", name)) %>%
+    filter(grepl("Text", name) | name == "Controls") %>%
     mutate(value = metric_sign*value) %>%
     summarise(
       meanv  = mean(value),
