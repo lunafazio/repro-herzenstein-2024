@@ -147,6 +147,7 @@ func_robplot_mean = function(results, whichmetric) {
     stop("Metric must be one of 'auc', 'mse'")
   }
   results %>%
+    mutate(year = year + 1) %>% # to match text
     filter(metric == whichmetric) %>%
     rename(w2v = `Word2Vec Settings`) %>%
     mutate(Data = sub(",.*$", "", Data)) %>%
@@ -165,7 +166,7 @@ func_robplot_mean = function(results, whichmetric) {
     ggplot(aes(x = year, y = value, color = w2v)) +
     geom_hline(yintercept = metric_worst, linetype = "dashed",
       color = "darkred", alpha = 0.5) +
-    geom_vline(xintercept = 2011, color = "lightblue",
+    geom_vline(xintercept = 2012, color = "lightblue",
       alpha = 0.25, linewidth = 2) +
     geom_line(alpha = 0.7, linewidth = 0.7) +
     geom_point(alpha = 0.7) +
@@ -190,6 +191,7 @@ func_robplot_range = function(results, whichmetric) {
     stop("Metric must be one of 'auc', 'mse'")
   }
   results %>%
+    mutate(year = year + 1) %>% # to match text
     filter(metric == whichmetric) %>%
     rename(w2v = `Word2Vec Settings`) %>%
     filter(w2v == "sg0_window3_dim100_epochs50_stopwords1") %>%
@@ -214,7 +216,7 @@ func_robplot_range = function(results, whichmetric) {
       ymin = lower, ymax = upper)) +
     geom_hline(yintercept = metric_worst, linetype = "dashed",
       color = "darkred", alpha = 0.5) +
-    geom_vline(xintercept = 2011, color = "lightblue",
+    geom_vline(xintercept = 2012, color = "lightblue",
       alpha = 0.25, linewidth = 2) +
     geom_line(linewidth = 0.7, position = position_dodge(0.3)) +
     geom_pointrange(position = position_dodge(0.3)) +
